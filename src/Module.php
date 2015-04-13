@@ -51,10 +51,14 @@ class Module
                     throw new InvalidArgumentException('Route overrides must be iterable.');
                 }
 
+                // Copying the parent config and merging in the overrides
                 $newRouteConfig = $config['router']['routes'][$routeConfig['extends']];
                 $newRouteConfig = ArrayUtils::merge($newRouteConfig, $routeConfig['overrides']);
                 $config['router']['routes'][$newRoute] = $newRouteConfig;
             }
+
+            // Removing this node so this isn't re-executed
+            unset($config['router']['route-inheritance']);
         }
 
         // Pass the changed configuration back to the listener:
