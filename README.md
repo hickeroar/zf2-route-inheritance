@@ -5,13 +5,14 @@ Why?
 ----
 ```
 I had some large and complicated routes set up for a project and needed to
-use "duplicate" the routes with alterations without having to copy, paste,
-and modify the whole route array.
+"duplicate" the routes with alterations without having to copy, paste, and
+modify the whole route array.
 ```
 
 Usage
 -----
 ```php
+// "Copies" my-original-route to my-new-route and overrides the route url
 'router' => [
     'route-inheritance' => [
         'my-new-route' => [
