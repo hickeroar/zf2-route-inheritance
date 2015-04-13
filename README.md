@@ -9,17 +9,42 @@ I had some large and complicated routes set up for a project and needed to
 modify the whole route array.
 ```
 
+Installation
+------------
+Use composer as described here: https://packagist.org/packages/hickeroar/zf2-route-inheritance
+
 Usage
 -----
 ```php
-// "Copies" my-original-route to my-new-route and overrides the route url
 'router' => [
-    'route-inheritance' => [
+    'routes' => [
+        'my-original-route' => [
+            'type' => 'literal',
+            'options' => [
+                'route'    => '/orig-url',
+                'defaults' => [
+                    'controller' => 'Application\Controller\IndexController',
+                    'action'     => 'index',
+                ],
+            ],
+        ],
+    ],
+    // "Copies" my-original-route to my-new-route and overrides the route url.
+    // You can also introduce new config/options not in the original route.
+    'inheritance' => [
         'my-new-route' => [
             'extends' => 'my-original-route',
-            'overrides' => [
+            'configuration' => [
+                'type' => 'segment',
                 'options' => [
-                    'route'    => '/new-url',
+                    'route'    => '/new-url/:segment',
+                    'constraints' => [
+                        'segment' => '[a-zA-Z0-9_-]+',
+                    ],
+                    'defaults' => [
+                        'controller' => 'Application\Controller\IndexController',
+                        'action'     => 'new',
+                    ],
                 ],
             ],
         ],

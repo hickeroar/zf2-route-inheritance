@@ -29,8 +29,8 @@ class Module
         $config         = $configListener->getMergedConfig(false);
 
         // Allow extension of routes with overriding capability
-        if (isset($config['router']['route-inheritance']) && is_array($config['router']['route-inheritance'])) {
-            foreach ($config['router']['route-inheritance'] as $newRoute => $routeConfig) {
+        if (isset($config['router']['inheritance']) && is_array($config['router']['inheritance'])) {
+            foreach ($config['router']['inheritance'] as $newRoute => $routeConfig) {
                 // Not going to override any existing routes
                 if (isset($config['router']['routes'][$newRoute])) {
                     throw new InvalidArgumentException('Cannot extend route to existing route id.');
@@ -46,19 +46,19 @@ class Module
                     throw new InvalidArgumentException('Parent route does not exist.');
                 }
 
-                // If there are overrides provided, they must be iterable
-                if (isset($routeConfig['overrides']) && !is_array($routeConfig['overrides'])) {
+                // If there is any configuration provided, it must be iterable
+                if (isset($routeConfig['configuration']) && !is_array($routeConfig['configuration'])) {
                     throw new InvalidArgumentException('Route overrides must be iterable.');
                 }
 
                 // Copying the parent config and merging in the overrides
                 $newRouteConfig = $config['router']['routes'][$routeConfig['extends']];
-                $newRouteConfig = ArrayUtils::merge($newRouteConfig, $routeConfig['overrides']);
+                $newRouteConfig = ArrayUtils::merge($newRouteConfig, $routeConfig['configuration']);
                 $config['router']['routes'][$newRoute] = $newRouteConfig;
             }
 
             // Removing this node so this isn't re-executed
-            unset($config['router']['route-inheritance']);
+            unset($config['router']['inheritance']);
         }
 
         // Pass the changed configuration back to the listener:
