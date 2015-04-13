@@ -29,8 +29,8 @@ Usage
             ],
         ],
     ],
-    // "Copies" my-original-route to my-new-route and overrides the route url.
-    // You can also introduce new config/options not in the original route.
+    // "Copies" my-original-route to my-new-route and overrides/adds various things.
+    // This currently uses a merge, so removing config keys is not supported.
     'inheritance' => [
         'my-new-route' => [
             'extends' => 'my-original-route',
