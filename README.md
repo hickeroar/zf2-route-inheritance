@@ -11,7 +11,8 @@ modify the whole route array.
 
 Installation
 ------------
-Use composer as described here: https://packagist.org/packages/hickeroar/zf2-route-inheritance
+- Use composer as described here: https://packagist.org/packages/hickeroar/zf2-route-inheritance
+- Add `RouteInheritance` to your `config/application.config.php`
 
 Usage
 -----
